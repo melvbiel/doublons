@@ -71,7 +71,7 @@ def trouver_fichiers_en_double(repertoire):
 
                             fichiers_par_hash = defaultdict(list)
                             for fichier in fichiers_meme_date:
-                                hash_md5 = calculate_md5(fichier)
+                                hash_md5 = calculer_md5(fichier)
                                 fichiers_par_hash[hash_md5].append(fichier)
 
                             for hash, fichiers_meme_hash in fichiers_par_hash.items():
@@ -149,9 +149,11 @@ def trouver_doublons_repertoires(repertoire1, repertoire2):
                 }):
                     doublons.append(fichier)
                     break
+    return doublons
 
 repertoire = 'C:\\Users\\melvy\\Desktop\\Algo'
 doublons = trouver_fichiers_en_double(repertoire)
+
 # Exemple d'utilisation Exercice 1
 
 for groupe in doublons:
@@ -162,9 +164,23 @@ for groupe in doublons:
 if doublons == []:
     print("Aucun doublon dans le répertoire choisi")
 
+# Exemple d'utilisation Exercice 2
+
 repertoire_a_analyser = "C:\\Users\\melvy\\Desktop\\Algo"  
 resultat = somme_taille_fichiers(repertoire_a_analyser)
 
-# Affichage des résultats
 for categorie, taille in resultat.items():
     print(f"Total {categorie} : {taille} octets")
+
+# Exemple d'utilisation Exercice 3
+if __name__ == "__main__":
+    rep1 = r"C:\\Users\\Kanek\\OneDrive\\Bureau\\Mon dossier"
+    rep2 = r"C:\\Users\\Kanek\\OneDrive\\Bureau\\Mon dossier 1"
+    doublons = trouver_doublons_repertoires(rep1, rep2)
+
+    if doublons:
+        print("Doublons trouvés :")
+        for fichier in doublons:
+            print(fichier)
+    else:
+        print("Aucun doublon trouvé.")
