@@ -19,12 +19,23 @@ def normaliser_nom(nom_fichier):
             nom_fichier = nom_fichier[:-len(suffix)]
     return nom_fichier
 
-def calculate_md5(file_path):
+def calculer_md5(file_path):
     with open(file_path, 'rb') as f:
         hash_md5 = hashlib.md5()
         for chunk in iter(lambda: f.read(4096), b""):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
+
+def comparer_fichiers(fichier1, fichier2):
+    if fichier1['taille'] != fichier2['taille']:
+        return False
+
+    if fichier1['date_modification'] != fichier2['date_modification']:
+        return False
+
+    hash1 = calculer_md5(fichier1['chemin'])
+    hash2 = calculer_md5(fichier2['chemin'])
+    return hash1 == hash2
 
 def trouver_fichiers_en_double(repertoire):
     fichiers_par_nom = defaultdict(list)
@@ -97,6 +108,47 @@ def somme_taille_fichiers(repertoire):
                 tailles["autre"] += taille  # Pour le reste
 
     return tailles
+
+#Exercice 3
+
+def trouver_doublons_repertoires(repertoire1, repertoire2):
+    """Comparer les fichiers entre deux répertoires et trouver les doublons"""
+    fichiers_repertoire1 = trouver_fichiers_en_double(repertoire1)
+    fichiers_repertoire2 = trouver_fichiers_en_double(repertoire2)
+
+    fichiers_par_nom_repertoire1 = {}
+    for fichier in fichiers_repertoire1:
+        nom_base = os.path.basename(fichier)
+        nom_normalise = normaliser_nom(nom_base)
+        taille = os.path.getsize(fichier)
+        date_modification = os.path.getmtime(fichier)
+
+        if nom_normalise not in fichiers_par_nom_repertoire1:
+            fichiers_par_nom_repertoire1[nom_normalise] = []
+
+        fichiers_par_nom_repertoire1[nom_normalise].append({
+            'chemin': fichier,
+            'taille': taille,
+            'date_modification': date_modification
+        })
+
+    doublons = []
+
+    for fichier in fichiers_repertoire2:
+        nom_base = os.path.basename(fichier)
+        nom_normalise = normaliser_nom(nom_base)
+        taille = os.path.getsize(fichier)
+        date_modification = os.path.getmtime(fichier)
+
+        if nom_normalise in fichiers_par_nom_repertoire1:
+            for fichier_repertoire1 in fichiers_par_nom_repertoire1[nom_normalise]:
+                if comparer_fichiers(fichier_repertoire1, {
+                    'chemin': fichier,
+                    'taille': taille,
+                    'date_modification': date_modification
+                }):
+                    doublons.append(fichier)
+                    break
 
 repertoire = 'C:\\Users\\melvy\\Desktop\\Algo'
 doublons = trouver_fichiers_en_double(repertoire)
