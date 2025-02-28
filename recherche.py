@@ -6,11 +6,11 @@ from collections import defaultdict
 #Exercice 1
 
 def lister_fichiers_recursivement(repertoire):
-    fichiers = []
+    liste_fichiers = []
     for racine, _, fichiers in os.walk(repertoire):
         for fichier in fichiers:
-            fichiers.append(os.path.join(racine, fichier))
-    return fichiers
+            liste_fichiers.append(os.path.join(racine, fichier))
+    return liste_fichiers
 
 def normaliser_nom(nom_fichier):
     suffixes = [' (1)', ' - copie', ' - copy']
@@ -98,17 +98,19 @@ def somme_taille_fichiers(repertoire):
 
     return tailles
 
-repertoire = 'C:\\Users\\Kanek\\OneDrive\\Bureau\\Mon dossier'
+repertoire = 'C:\\Users\\melvy\\Desktop\\Algo'
 doublons = trouver_fichiers_en_double(repertoire)
-# Exemple d'utilisation Exercice 2
+# Exemple d'utilisation Exercice 1
 
 for groupe in doublons:
     print("Fichiers en double:")
     for fichier in groupe:
         print(f"  - {fichier}")
 
-# Exemple d'utilisation Exercice 2
-repertoire_a_analyser = "C:\\Users\\melvy\\Desktop\\Algo"  # À remplacer par le chemin du dossier
+if doublons == []:
+    print("Aucun doublon dans le répertoire choisi")
+
+repertoire_a_analyser = "C:\\Users\\melvy\\Desktop\\Algo"  
 resultat = somme_taille_fichiers(repertoire_a_analyser)
 
 # Affichage des résultats
