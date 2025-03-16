@@ -14,7 +14,7 @@ def lister_fichiers_recursivement(repertoire):
     return liste_fichiers
 
 def normaliser_nom(nom_fichier):
-    suffixes = [' (1)', ' - copie', ' - copy']
+    suffixes = [' (1)',' (2)',' (3)',' (4)',' (5)',' (6)',' (7)',' (8)',' (9)',' (10)', ' - copie', ' - copy']
     for suffix in suffixes:
         if nom_fichier.endswith(suffix):
             nom_fichier = nom_fichier[:-len(suffix)]
@@ -244,13 +244,13 @@ def synchroniser_repertoires(rep1, rep2):
             shutil.copy2(fichier_rep1, chemin_fichier_rep2)
             print(f"Fichier {nom_fichier} copié dans {rep2}")
 
-rep1 = os.path.abspath(r"C:\Users\Kanek\OneDrive\Bureau\Mon dossier")
-rep2 = os.path.abspath(r"C:\Users\Kanek\OneDrive\Bureau\Mon dossier 1")
+rep1 = os.path.abspath(r"C:\Users\Melvyn\Desktop\testdoublons")
+rep2 = os.path.abspath(r"c:\Users\Melvyn\Desktop\testdoublons-Copi2e")
 
 synchroniser_repertoires(rep1, rep2)
 
 
-repertoire = 'C:\\Users\\melvy\\Desktop\\Algo'
+repertoire = r'C:\Users\Melvyn\Desktop\testdoublons'
 doublons = trouver_fichiers_en_double(repertoire)
 
 # Exemple d'utilisation Exercice 1
@@ -265,7 +265,7 @@ if doublons == []:
 
 # Exemple d'utilisation Exercice 2
 
-repertoire_a_analyser = "C:\\Users\\melvy\\Desktop\\Algo"  
+repertoire_a_analyser = r"C:\Users\Melvyn\Desktop\testdoublons"  
 resultat = somme_taille_fichiers(repertoire_a_analyser)
 
 for categorie, taille in resultat.items():
@@ -273,8 +273,8 @@ for categorie, taille in resultat.items():
 
 # Exemple d'utilisation Exercice 3
 if __name__ == "__main__":
-    rep1 = r"C:\\Users\\Kanek\\OneDrive\\Bureau\\Mon dossier"
-    rep2 = r"C:\\Users\\Kanek\\OneDrive\\Bureau\\Mon dossier 1"
+    rep1 = r"C:\Users\Melvyn\Desktop\testdoublons"
+    rep2 = r"c:\Users\Melvyn\Desktop\testdoublons-Copi2e"
     doublons = trouver_doublons_repertoires(rep1, rep2)
 
     if doublons:
@@ -283,3 +283,9 @@ if __name__ == "__main__":
             print(fichier)
     else:
         print("Aucun doublon trouvé.")
+
+#exemple d'utilisation Exercice 4
+
+repa = r"C:\Users\Melvyn\Desktop\testdoublons"
+repb = r"c:\Users\Melvyn\Desktop\testdoublons-Copi2e"
+supprimer_doublons_repertoire(repa, repb)
